@@ -7,6 +7,7 @@ import "base64-sol/base64.sol";
 
 contract SVGNFT is ERC721URIStorage {
 
+    event CreatedSVGNFT (uint256 indexed tokenId, string tokenURI);
     uint256 public tokenId;
     constructor() ERC721 ("NFT SVG", "sNFT") {
         tokenId = 0;
@@ -17,7 +18,10 @@ contract SVGNFT is ERC721URIStorage {
         // create imageURI
         string memory imageURI = svgToImageURI(svg);
         // create tokenURI
-
+        string memory tokenURI = formatTokenURI(imageURI);
+        // set tokenURI to the NFT with tokenId
+        _setTokenURI(tokenId, tokenURI);
+        emit CreatedSVGNFT(tokenId, tokenURI);
         tokenId ++;
     }
 
